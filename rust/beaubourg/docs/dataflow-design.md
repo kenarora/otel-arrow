@@ -310,3 +310,12 @@ dataflow optimizer that merges linear (branchless) chains of nodes, we achieve t
 modularity, composability, and performance. Control signal propagation is clear, following the reverse path of messages
 processed through the dataflow. Intermediate nodes that have no interest in some or all control signals are just be 
 skipped.
+
+## Questons
+1. What is a cancellation request signal mean, for a message that has been sent already -- Is this a feed-forward signal for prior sent message or something else?
+2. Does the timer need to a global (inter-processor) signal?  Or can each processor keep its own timer?  Or perhaps(?) there's need for some sort of "time-sync" singal, as a reference time source (redundant with NTP?)
+3. Could "Error" be considerad a special case of NACK?  Would it make sense to generalize the idea, along the lines of HTTP response codes?
+4. Just wanted to clarify an assumption -- I am assuming that router processors can send copies of messages to multiple destinations, correct?
+5. Another assumption clarification -- I assume a single processor (or perhaps the term is "single processing node"(?)) can do multiple "processor" actions/types.  For example, an admission controller + samplng + <some form of routing>.
+6. Two questions around "deadlines" and "deadline processors" -- first, is the intent here something like time-bound buffering (i.e. buffer for to <X> seconds (or <Y> messages, perhaps) before dropping/falling back?  Second, does the deadline have to be "inline" or can it be statically configured, or driven by control signals (like upstream resource usage)?
+  
